@@ -3,7 +3,9 @@ set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
 " 设置主题
-colorscheme gruvbox
+set background=dark
+colorscheme hybrid
+" colorscheme gruvbox
 " 设置行号
 set number
 
