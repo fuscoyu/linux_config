@@ -34,6 +34,12 @@ call plug#begin('~/.vim/plugged')
 " Make sure you use single quotes
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+" 主题下载慢 git clone 慢 
+" 方法1.  /etc/ssh/ssh_config 启用GSSAPIAuthentication no
+" 方法2. 在/etc/hosts 文件中注入 github.com ip地址 
+" 例如：
+" 140.82.114.4 github.com
+" 199.232.5.194 github.global-ssl.fastly.net
 Plug 'junegunn/vim-easy-align'
 
 Plug 'mhinz/vim-startify'
