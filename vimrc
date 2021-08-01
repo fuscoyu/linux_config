@@ -1,8 +1,12 @@
+" 设置字符类型
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
+" 设置主题
+colorscheme gruvbox
 " 设置行号
 set number
+
 " 高亮关键字
 syntax on
 
@@ -10,6 +14,7 @@ syntax on
 let mapleader=','
 " 绑定,w insert模式保存文件
 inoremap <leader>w <Esc>:w<cr>
+
 " jj 代替Esc
 inoremap jj <Esc>
 " command 格式化json字符串
@@ -30,5 +35,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-easy-align'
 
 Plug 'mhinz/vim-startify'
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'yggdroot/indentline'
+Plug 'morhetz/gruvbox'
+Plug 'w0ng/vim-hybrid'
 " Initialize plugin system
 call plug#end()
