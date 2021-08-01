@@ -35,11 +35,30 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-easy-align'
 
 Plug 'mhinz/vim-startify'
+" 目录树
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'yggdroot/indentline'
+" vim主题
 Plug 'morhetz/gruvbox'
 Plug 'w0ng/vim-hybrid'
+" 搜索文件
+Plug 'kien/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
 " Initialize plugin system
 call plug#end()
+
+" autocmd VimEnter * NERDTree
+
+nnoremap <leader>v :NERDTreeFind<cr>
+nnoremap <leader>g :NERDTreeToggle<cr>
+
+let NERDTreeShowHidden=1
+let NERDTreeIgnore = [
+		\ '.git$', ]
+" ctrlp
+let g:ctrlp_map='<c-p>'
+
+" vim-easymotion
+nmap ss <Plug>(easymotion-s2)
