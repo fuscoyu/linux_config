@@ -1,2 +1,2 @@
-# vim_config
-my vim config
+# linux_config
+my linux config
