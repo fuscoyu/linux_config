@@ -55,22 +55,24 @@ call plug#begin('~/.vim/plugged')
 " 140.82.114.4 github.com
 " 199.232.5.194 github.global-ssl.fastly.net
 "
+" 翻译插件
+Plug 'voldikss/vim-translate-me'
 " 高亮单词
-" Plug 'lfv89/vim-interestingwords'
+Plug 'lfv89/vim-interestingwords'
 
-" Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 
-" Plug 'mhinz/vim-startify'
-" " 目录树
-" Plug 'scrooloose/nerdtree'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-" " 代码线
-" Plug 'yggdroot/indentline'
-" " vim主题
-" Plug 'morhetz/gruvbox'
-" Plug 'w0ng/vim-hybrid'
-" " 搜索文件
+Plug 'mhinz/vim-startify'
+" 目录树
+Plug 'scrooloose/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" 代码线
+Plug 'yggdroot/indentline'
+" vim主题
+Plug 'morhetz/gruvbox'
+Plug 'w0ng/vim-hybrid'
+" 搜索文件
 Plug 'kien/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -110,13 +112,27 @@ let b:SimpylFold_fold_blank=1
 " Navigate highlighted words with n and N
 " Clear every word highlight with <Leader>K throughout the buffer
 
+" 翻译插件
+""" Configuration example
+" Echo translation in the cmdline
+nmap <silent> <Leader>t <Plug>Translate
+vmap <silent> <Leader>t <Plug>TranslateV
+" Display translation in a window
+nmap <silent> <Leader>w <Plug>TranslateW
+vmap <silent> <Leader>w <Plug>TranslateWV
+" Replace the text with translation
+nmap <silent> <Leader>r <Plug>TranslateR
+vmap <silent> <Leader>r <Plug>TranslateRV
+" Translate the text in clipboard
+nmap <silent> <Leader>x <Plug>TranslateX
+
 " autocmd VimEnter * NERDTree
 nnoremap <leader>v :NERDTreeFind<cr>
 nnoremap <leader>g :NERDTreeToggle<cr>
 
 let NERDTreeShowHidden=1
 let NERDTreeIgnore = [
-		\ '.git$', '.swp', '.pyc']
+		\ '.git$', '.swp', '.pyc', 'idea']
 
 " fzf.vim
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
@@ -138,7 +154,7 @@ nmap ss <Plug>(easymotion-s2)
 set completeopt-=preview
 
 " tagbar
-nnoremap <leader>t :TagbarToggle<CR>
+" nnoremap <leader>t :TagbarToggle<CR>
 
 " coc.nvim
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
