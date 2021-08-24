@@ -84,6 +84,7 @@ Plug 'tpope/vim-commentary'
 
 " 语言插件
 Plug 'fatih/vim-go'
+Plug 'vim-python/python-syntax'
 " Plug 'davidhalter/jedi-vim'
 " Plug 'Shougo/deoplete.nvim'
 " Plug 'deoplete-plugins/deoplete-jedi'
@@ -148,6 +149,10 @@ let g:go_highlight_function_calls = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_build_constraints = 1
+
+" vim-python/python-syntax
+" 高亮Python关键字
+let g:python_highlight_all = 1
 
 " coc.nvim
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
