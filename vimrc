@@ -59,6 +59,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'voldikss/vim-translate-me'
 " 高亮单词
 Plug 'lfv89/vim-interestingwords'
+" 括号自动补全
+Plug 'jiangmiao/auto-pairs'
 
 Plug 'junegunn/vim-easy-align'
 
@@ -70,22 +72,18 @@ Plug 'vim-airline/vim-airline-themes'
 " 代码线
 Plug 'yggdroot/indentline'
 " vim主题
-Plug 'morhetz/gruvbox'
 Plug 'w0ng/vim-hybrid'
 " 搜索文件
-Plug 'kien/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
+
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" 折叠代码
-Plug 'tmhedberg/SimpylFold'
 " 注释插件
 Plug 'tpope/vim-commentary'
 
 " 语言插件
-" Plug 'codota/tabnine-vim'
-" Plug 'fatih/vim-go'
+Plug 'fatih/vim-go'
 " Plug 'davidhalter/jedi-vim'
 " Plug 'Shougo/deoplete.nvim'
 " Plug 'deoplete-plugins/deoplete-jedi'
@@ -94,8 +92,6 @@ Plug 'tpope/vim-commentary'
 " 下载语言服务器 pip install python-language-servers 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'preservim/tagbar'
-
 " 格式化
 Plug 'sbdchd/neoformat'
 " 静态检查
@@ -103,10 +99,6 @@ Plug 'dense-analysis/ale'
 " Initialize plugin system
 call plug#end()
 
-" 折叠代码 
-let g:SimpylFold_docstring_preview=1
-let g:SimpylFold_fold_blank=1
-let b:SimpylFold_fold_blank=1
 " 高亮单词
 " Highlight with <Leader>k
 " Navigate highlighted words with n and N
@@ -138,14 +130,6 @@ let NERDTreeIgnore = [
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 " 搜索文件
 nnoremap <silent> <c-p> :Files <CR>
-" ctrlp
-" let g:ctrlp_map='<c-p>'
-" set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-" let g:ctrlp_custom_ignore = {
-" 			\ 'dir': '\v[\/]\.(git|hg|svn)$',
-" 			\ 'file': '\v\.(exe|so|dll|swp|pyc|pyo)$',
-" 			\ }
-" let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
 " vim-easymotion
 nmap ss <Plug>(easymotion-s2)
@@ -153,8 +137,17 @@ nmap ss <Plug>(easymotion-s2)
 " 关闭文档预览
 set completeopt-=preview
 
-" tagbar
-" nnoremap <leader>t :TagbarToggle<CR>
+" vim-go 安装
+" go env -w GO111MODULE=on
+" go env -w GOPROXY=https://goproxy.cn,direct
+" GoInstall+Tab
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
 
 " coc.nvim
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
