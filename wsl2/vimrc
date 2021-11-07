@@ -1,5 +1,6 @@
-
+" 自动缩进
 set autoindent
+" 所有模式都可以使用鼠标
 set mouse=a
 "设置字符类型
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
@@ -23,6 +24,8 @@ set foldlevel=99
 " nnoremap <space> za
 " 高亮关键字
 syntax on
+" 关闭文档预览
+set completeopt-=preview
 
 " 设置老板键 ,
 let mapleader=','
@@ -41,24 +44,8 @@ inoremap jj <Esc>
 " command 格式化json字符串
 com! FormatJSON %!python3 -m json.tool
 
-" 安装vim-plug 插件管理器
-" curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-"     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
-" Make sure you use single quotes
-
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-" 主题下载慢 git clone 慢 
-" 方法1.  /etc/ssh/ssh_config 启用GSSAPIAuthentication no
-" 方法2. 在/etc/hosts 文件中注入 github.com ip地址 
-" 例如：
-" 140.82.114.4 github.com
-" 199.232.5.194 github.global-ssl.fastly.net
 " markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " 翻译插件
@@ -73,47 +60,42 @@ Plug 'junegunn/vim-easy-align'
 Plug 'mhinz/vim-startify'
 " 目录树
 Plug 'scrooloose/nerdtree'
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " 代码线
 Plug 'yggdroot/indentline'
 " vim主题
 Plug 'w0ng/vim-hybrid'
-" 搜索文件
+" 快速搜索内容
 Plug 'easymotion/vim-easymotion'
-
+" 搜索文件
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
 " 注释插件
 Plug 'tpope/vim-commentary'
-
-" 语言插件
+" tagbar 大纲展示
+Plug 'majutsushi/tagbar'
+" 书签
+Plug 'MattesGroeger/vim-bookmarks'
+" ansible 语法高亮
 Plug 'pearofducks/ansible-vim'
-Plug 'stephpy/vim-yaml'
-
-Plug 'shougo/vimshell.vim'
-
-Plug 'fatih/vim-go'
-Plug 'vim-python/python-syntax'
-" Plug 'davidhalter/jedi-vim'
-" Plug 'Shougo/deoplete.nvim'
-" Plug 'deoplete-plugins/deoplete-jedi'
-" Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
-
-" 下载语言服务器 pip install python-language-servers 
+" 语言服务器协议  language server protocol
+" Plug 'prabirshrestha/vim-lsp'
+" 代码补全
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'jayli/vim-easycomplete'
+" 语法检查
 
-" 格式化
-Plug 'sbdchd/neoformat'
-" 静态检查
-Plug 'dense-analysis/ale'
 
 " Initialize plugin system
 call plug#end()
 
+" tagbar
+nmap <F8> :TagbarToggle<CR>
 
 " ansible 
+
 let g:ansible_unindent_after_newline = 1
 let g:ansible_yamlKeyName = 'yamlKey'
 let g:ansible_attribute_highlight = "ob"
@@ -161,26 +143,122 @@ nnoremap <silent> <c-p> :Files <CR>
 " vim-easymotion
 nmap ss <Plug>(easymotion-s2)
 
-" 关闭文档预览
-set completeopt-=preview
+" markdown
+" set to 1, nvim will open the preview window after entering the markdown buffer
+" default: 0
+let g:mkdp_auto_start = 0
 
-" vim-go 安装
-" go env -w GO111MODULE=on
-" go env -w GOPROXY=https://goproxy.cn,direct
-" GoInstall+Tab
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_build_constraints = 1
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 1
 
-" vim-python/python-syntax
-" 高亮Python关键字
-let g:python_highlight_all = 1
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+" default: 0
+let g:mkdp_refresh_slow = 0
 
-" coc.nvim
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it can be use in markdown file
+" default: 0
+let g:mkdp_command_for_global = 0
+
+" set to 1, preview server available to others in your network
+" by default, the server listens on localhost (127.0.0.1)
+" default: 0
+let g:mkdp_open_to_the_world = 1
+
+" use custom IP to open preview page
+" useful when you work in remote vim and preview on local browser
+" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+" default empty
+let g:mkdp_open_ip = ''
+
+" specify browser to open preview page
+" default: ''
+let g:mkdp_browser = ''
+
+" set to 1, echo preview page url in command line when open preview page
+" default is 0
+let g:mkdp_echo_preview_url = 0
+
+" a custom vim function name to open preview page
+" this function will receive url as param
+" default is empty
+let g:mkdp_browserfunc = ''
+
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+" sequence_diagrams: js-sequence-diagrams options
+" content_editable: if enable content editable for preview page, default: v:false
+" disable_filename: if disable filename header for preview page, default: 0
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {},
+    \ 'flowchart_diagrams': {},
+    \ 'content_editable': v:false,
+    \ 'disable_filename': 0
+    \ }
+
+" use a custom markdown style must be absolute path
+" like '/Users/username/markdown.css' or expand('~/markdown.css')
+let g:mkdp_markdown_css = ''
+
+" use a custom highlight style must absolute path
+" like '/Users/username/highlight.css' or expand('~/highlight.css')
+let g:mkdp_highlight_css = ''
+
+" use a custom port to start server or random for empty
+let g:mkdp_port = ''
+
+" preview page title
+" ${name} will be replace with the file name
+let g:mkdp_page_title = '「${name}」'
+
+" recognized filetypes
+" these filetypes will have MarkdownPreview... commands
+let g:mkdp_filetypes = ['markdown']
+
+
+autocmd BufNewFile *.py,*.cc,*.sh,*.java exec ":call SetTitle()"
+"新建.py,.cc,.java,.sh,
+"定义函数SetTitle，自动插入文件头
+func SetTitle()
+    if &filetype == 'python'
+        call setline(1, "\#!/usr/bin/env python")
+        call setline(2, "\# -*- coding:utf-8 -*-")
+        normal G
+        normal o
+        normal o
+        call setline(5, "if __name__ == '__main__':")
+        call setline(6, "    pass")
+    endif
+endfunc
+
+function HeaderSh()
+    call setline(1, "#!/usr/bin/env bash")
+    normal G
+    normal o
+    normal o
+endf
+autocmd bufnewfile *.sh call HeaderSh()
+
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=utf-8
@@ -249,7 +327,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
-" nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -346,122 +424,4 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-" LSP
-let g:LanguageClient_rootMarkers = {
-    \ 'go': ['.git', 'go.mod'],
-    \ }
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-    \ 'shell': ['shellcheck'],
-    \ 'java':['/opt/jdt/jdtls.sh'],
-    \ 'go': ['bingo', '--mode', 'stdio','--pprof', ':6060'],
-    \ }
-" LanguageClient
-nnoremap <space>li :call LanguageClient_textDocument_implementation()<CR>
-nnoremap <space>ld :call LanguageClient#textDocument_definition()<CR>
-nnoremap <space>lr :call LanguageClient#textDocument_rename()<CR>
-nnoremap <space>lf :call LanguageClient#textDocument_formatting()<CR>
-nnoremap <space>lt :call LanguageClient#textDocument_typeDefinition()<CR>
-nnoremap <space>lx :call LanguageClient#textDocument_references()<CR>
-nnoremap <space>la :call LanguageClient_workspace_applyEdit()<CR>
-nnoremap <space>lh :call LanguageClient#textDocument_hover()<CR>
-nnoremap <space>ls :call LanguageClient_textDocument_documentSymbol()<CR>
-nnoremap <space>lc :call LanguageClient_textDocument_codeAction()<CR>
-nnoremap <space>lu :call *LanguageClient#textDocument_documentHighlight()<CR>
-nnoremap <space>lm :call LanguageClient_contextMenu()<CR>
-nnoremap <space>pc :pc<CR>
-au BufNewFile,BufRead Jenkinsfile setf groovy
-
-" markdown
-" set to 1, nvim will open the preview window after entering the markdown buffer
-" default: 0
-let g:mkdp_auto_start = 0
-
-" set to 1, the nvim will auto close current preview window when change
-" from markdown buffer to another buffer
-" default: 1
-let g:mkdp_auto_close = 1
-
-" set to 1, the vim will refresh markdown when save the buffer or
-" leave from insert mode, default 0 is auto refresh markdown as you edit or
-" move the cursor
-" default: 0
-let g:mkdp_refresh_slow = 0
-
-" set to 1, the MarkdownPreview command can be use for all files,
-" by default it can be use in markdown file
-" default: 0
-let g:mkdp_command_for_global = 0
-
-" set to 1, preview server available to others in your network
-" by default, the server listens on localhost (127.0.0.1)
-" default: 0
-let g:mkdp_open_to_the_world = 1
-
-" use custom IP to open preview page
-" useful when you work in remote vim and preview on local browser
-" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
-" default empty
-let g:mkdp_open_ip = ''
-
-" specify browser to open preview page
-" default: ''
-let g:mkdp_browser = ''
-
-" set to 1, echo preview page url in command line when open preview page
-" default is 0
-let g:mkdp_echo_preview_url = 0
-
-" a custom vim function name to open preview page
-" this function will receive url as param
-" default is empty
-let g:mkdp_browserfunc = ''
-
-" options for markdown render
-" mkit: markdown-it options for render
-" katex: katex options for math
-" uml: markdown-it-plantuml options
-" maid: mermaid options
-" disable_sync_scroll: if disable sync scroll, default 0
-" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
-"   middle: mean the cursor position alway show at the middle of the preview page
-"   top: mean the vim top viewport alway show at the top of the preview page
-"   relative: mean the cursor position alway show at the relative positon of the preview page
-" hide_yaml_meta: if hide yaml metadata, default is 1
-" sequence_diagrams: js-sequence-diagrams options
-" content_editable: if enable content editable for preview page, default: v:false
-" disable_filename: if disable filename header for preview page, default: 0
-let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1,
-    \ 'sequence_diagrams': {},
-    \ 'flowchart_diagrams': {},
-    \ 'content_editable': v:false,
-    \ 'disable_filename': 0
-    \ }
-
-" use a custom markdown style must be absolute path
-" like '/Users/username/markdown.css' or expand('~/markdown.css')
-let g:mkdp_markdown_css = ''
-
-" use a custom highlight style must absolute path
-" like '/Users/username/highlight.css' or expand('~/highlight.css')
-let g:mkdp_highlight_css = ''
-
-" use a custom port to start server or random for empty
-let g:mkdp_port = ''
-
-" preview page title
-" ${name} will be replace with the file name
-let g:mkdp_page_title = '「${name}」'
-
-" recognized filetypes
-" these filetypes will have MarkdownPreview... commands
-let g:mkdp_filetypes = ['markdown']
 
