@@ -1,0 +1,20 @@
+---
+extends: default
+ignore: |
+  .tox/
+
+rules:
+  indentation:
+    spaces: consistent
+    indent-sequences: true
+    check-multi-line-strings: true
+  line-length: disable
+  truthy: disable
+  braces:
+    max-spaces-inside: 1
+  comments:
+    require-starting-space: true
+    # Ignore comment validation in globals.yml - we break the
+    # require-starting-space rule.
+    ignore: |
+      etc/kolla/globals.yml
