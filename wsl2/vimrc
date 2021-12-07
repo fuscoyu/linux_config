@@ -8,8 +8,7 @@ set termencoding=utf-8
 set encoding=utf-8
 " 设置主题
 set background=dark
-colorscheme hybrid
-" colorscheme gruvbox
+colorscheme monokai
 " 高亮当前行
 set cursorline 
 hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
@@ -17,19 +16,15 @@ hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=whi
 set clipboard=unnamedplus
 " 设置行号
 set number
-
 " 折叠代码
 set foldmethod=indent
 set foldlevel=99
-" nnoremap <space> za
 " 高亮关键字
 syntax on
 " 关闭文档预览
 set completeopt-=preview
-
 " 设置老板键 ,
 let mapleader=','
-
 " 绑定,w insert模式保存文件
 inoremap <leader>w <Esc>:w<cr>
 
@@ -41,70 +36,103 @@ noremap <C-l> <C-w>l
 
 " jj 代替Esc
 inoremap jj <Esc>
-" command 格式化json字符串
-com! FormatJSON %!python3 -m json.tool
 
 call plug#begin('~/.vim/plugged')
-
 " markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " 翻译插件
 Plug 'voldikss/vim-translator'
 " 高亮单词
 Plug 'lfv89/vim-interestingwords'
-" 括号自动补全
-Plug 'jiangmiao/auto-pairs'
-
-Plug 'junegunn/vim-easy-align'
-
+" vim 启动屏幕
 Plug 'mhinz/vim-startify'
-" 目录树
+" vim目录树
 Plug 'scrooloose/nerdtree'
-
+" vim 状态栏
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" 代码线
+" vim可视化缩进线
 Plug 'yggdroot/indentline'
 " vim主题
 Plug 'w0ng/vim-hybrid'
-" 快速搜索内容
+Plug 'crusoexia/vim-monokai'
+" vim快速搜索内容
 Plug 'easymotion/vim-easymotion'
-" 搜索文件
+" vim搜索文件
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-" 注释插件
+" vim注释插件
 Plug 'tpope/vim-commentary'
-" tagbar 大纲展示
+" vimtagbar 大纲展示
 Plug 'majutsushi/tagbar'
-" 书签
+" vim书签
 Plug 'MattesGroeger/vim-bookmarks'
-" ansible 语法高亮
-Plug 'pearofducks/ansible-vim'
-" 语言服务器协议  language server protocol
-" Plug 'prabirshrestha/vim-lsp'
 " 代码补全
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'jayli/vim-easycomplete'
 " 语法检查
-
-
+Plug 'dense-analysis/ale'
 " Initialize plugin system
 call plug#end()
+
+" yggdroot/indentline
+let g:indent_guides_guide_size            = 1  " 指定对齐线的尺寸
+let g:indent_guides_start_level           = 2  " 从第二层开始可视化显示缩进
+
+" vim-airline
+" 设置状态栏
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#buffer_nr_show = 0
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline_theme = 'desertink'  " 主题
+let g:airline#extensions#keymap#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#buffer_idx_format = {
+       \ '0': '0 ',
+       \ '1': '1 ',
+       \ '2': '2 ',
+       \ '3': '3 ',
+       \ '4': '4 ',
+       \ '5': '5 ',
+       \ '6': '6 ',
+       \ '7': '7 ',
+       \ '8': '8 ',
+       \ '9': '9 '
+       \}
+" 设置切换tab的快捷键 <\> + <i> 切换到第i个 tab
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+" 设置切换tab的快捷键 <\> + <-> 切换到前一个 tab
+nmap <leader>- <Plug>AirlineSelectPrevTab
+" 设置切换tab的快捷键 <\> + <+> 切换到后一个 tab
+nmap <leader>+ <Plug>AirlineSelectNextTab
+" 设置切换tab的快捷键 <\> + <q> 退出当前的 tab
+nmap <leader>q :bp<cr>:bd #<cr>
+" 修改了一些个人不喜欢的字符
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_symbols.linenr = "CL" " current line
+let g:airline_symbols.whitespace = '|'
+let g:airline_symbols.maxlinenr = 'Ml' "maxline
+let g:airline_symbols.branch = 'BR'
+let g:airline_symbols.readonly = "RO"
+let g:airline_symbols.dirty = "DT"
+let g:airline_symbols.crypt = "CR" 
 
 " tagbar
 nmap <F8> :TagbarToggle<CR>
 
-" ansible 
-
-let g:ansible_unindent_after_newline = 1
-let g:ansible_yamlKeyName = 'yamlKey'
-let g:ansible_attribute_highlight = "ob"
-let g:ansible_name_highlight = 'd'
-let g:ansible_extra_keywords_highlight = 1
-let g:ansible_extra_keywords_highlight_group = 'Statement'
-let g:ansible_normal_keywords_highlight = 'Constant'
-let g:ansible_template_syntaxes = { '*.rb.j2': 'ruby' }
-
+" 
+" coc.vim
+let g:coc_global_extensions = ['coc-json', 'coc-pairs', 'coc-clangd', 'coc-pyright', 'coc-git', 'coc-sh', 'coc-yaml', 'coc-highlight', 'coc-syntax']
 
 " 高亮单词
 " Highlight with <Leader>k
@@ -133,8 +161,7 @@ nnoremap <leader>g :NERDTreeToggle<cr>
 
 let NERDTreeShowHidden=1
 let NERDTreeIgnore = [
-		\ '.git$', '.swp', '.pyc', 'idea']
-
+		\ '.git$', '.swp', '.pyc', '.idea']
 " fzf.vim
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 " 搜索文件
