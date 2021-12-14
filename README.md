@@ -1,12 +1,3 @@
 # linux config
 
-**
-wsl2
-
-``` 
-wsl2
-├── MobaXterm.minttyrc
-├── tmux.conf
-└── vimrc
-
-```
+- [wsl2 安装手册](wsl2/README.md)
