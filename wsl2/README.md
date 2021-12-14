@@ -21,7 +21,7 @@
 
 以下是摘录出来的内容，在Windows终端上以管理员执行即可。
 
-``bash
+```bash
 # install wsl
 wsl --install
 # enable wsl2
@@ -33,7 +33,7 @@ wsl --set-default-version 2
 # subsystem list
 wsl -l -v
 
-``
+```
 
 可以通过Micorsoft store 搜索下载Ubuntu20.04
 
@@ -71,7 +71,7 @@ wsl -l -v
 - ctags
 - python3-pip
 
-``bash
+```bash
 # apt
 sudo apt install -y tmux ctags neovim python3-neovim python3-pip unzip mlocate zsh
 
@@ -103,7 +103,7 @@ unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
 chmod +x /tmp/win32yank.exe
 sudo mv /tmp/win32yank.exe /usr/local/bin/
 
-``
+```
 
 ### 安装snap
 
@@ -111,7 +111,7 @@ sudo mv /tmp/win32yank.exe /usr/local/bin/
 
 [Install shfmt on Ubuntu using the Snap Store | Snapcraft](https://snapcraft.io/install/shfmt/ubuntu#install)
 
-``bash
+```bash
 
 sudo apt update
 sudo apt install snapd
@@ -130,7 +130,7 @@ kernel  5.10.16.3-microsoft-standard-WSL2
 # 安装shfmt
 sudo snap install shfmt
 
-``
+```
 
 ## FAQ
 
@@ -149,10 +149,10 @@ Windows缺少运行库导致的(网上有很多)
 
 新建文件.wslconfig `C:\Users\xxx\.wslconfig`
 
-``bash
+```bash
 [wsl2]
 processors=8
 memory=8GB
 swap=8GB
 localhostForwarding=true
-``
+```
