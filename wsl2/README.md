@@ -79,7 +79,7 @@ sudo apt install -y tmux ctags neovim python3-neovim python3-pip unzip mlocate z
 curl -sL install-node.vercel.app/lts | sudo bash
 
 # pip
-pip install commitizen mycli tldr
+pip install commitizen mycli tldr pysocks
 
 # 下载MesloLGS字体
 # https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k
