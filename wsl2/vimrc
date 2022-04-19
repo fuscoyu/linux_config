@@ -1,17 +1,35 @@
+"缩进为4
+set shiftwidth=4
+set softtabstop=4
+"Tab键的宽度
+set tabstop=4"
+set autoindent
+set cindent
+" Tab键的宽度
+set tabstop=4
+" 统一缩进为4
+set softtabstop=4
+set shiftwidth=4
+" 使用空格代替制表符
+set expandtab
+" 在行和段开始处使用制表符
+set smarttab
 " 自动缩进
 set autoindent
 " 所有模式都可以使用鼠标
 set mouse=a
+" 文件格式
+set fileformat=unix
 "设置字符类型
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
 " 设置主题
 set background=dark
-colorscheme monokai
+colorscheme hybrid
 " 高亮当前行
 set cursorline 
-hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+"hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 " 共享剪贴板
 set clipboard=unnamedplus
 " 设置行号
@@ -38,8 +56,6 @@ noremap <C-l> <C-w>l
 inoremap jj <Esc>
 
 call plug#begin('~/.vim/plugged')
-" markdown
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 " 翻译插件
 Plug 'voldikss/vim-translator'
 " 高亮单词
@@ -55,7 +71,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'yggdroot/indentline'
 " vim主题
 Plug 'w0ng/vim-hybrid'
-Plug 'crusoexia/vim-monokai'
 " vim快速搜索内容
 Plug 'easymotion/vim-easymotion'
 " vim搜索文件
@@ -69,6 +84,8 @@ Plug 'majutsushi/tagbar'
 Plug 'MattesGroeger/vim-bookmarks'
 " 代码补全
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" vim-go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' } 
 " 语法检查
 Plug 'dense-analysis/ale'
 " Initialize plugin system
@@ -130,9 +147,8 @@ let g:airline_symbols.crypt = "CR"
 " tagbar
 nmap <F8> :TagbarToggle<CR>
 
-" 
 " coc.vim
-let g:coc_global_extensions = ['coc-json', 'coc-pairs', 'coc-clangd', 'coc-pyright', 'coc-git', 'coc-sh', 'coc-yaml', 'coc-highlight', 'coc-syntax']
+let g:coc_global_extensions = ['coc-json', 'coc-pairs', 'coc-clangd', 'coc-git', 'coc-sh', 'coc-highlight', 'coc-syntax', 'coc-go']
 
 " 高亮单词
 " Highlight with <Leader>k
@@ -159,9 +175,20 @@ nmap <silent> <Leader>x <Plug>TranslateX
 nnoremap <leader>v :NERDTreeFind<cr>
 nnoremap <leader>g :NERDTreeToggle<cr>
 
-let NERDTreeShowHidden=1
+" 是否显示隐藏文件
+let NERDTreeShowHidden=0
+" 终端启动vim 共享NERTree
+let g:nerdtree_tabs_open_on_console_startup=1
+" 书签
+let NERDTreeShowBookmarks=1
+" 忽略文件
 let NERDTreeIgnore = [
-		\ '.git$', '.swp', '.pyc', '.idea']
+		\ '.git$', '.swp', '.pyc', '.idea',
+		\ '.cache', '.config', '.ipython', '.landscape',
+		\ '.local', '.npm', '.oh-my-zsh', '.tldr', '.vscode-server',
+		\ '.zplug']
+" 当vim中没有其他文件，值剩下nerdtree的时候，自动关闭窗口
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " fzf.vim
 nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 " 搜索文件
@@ -452,3 +479,14 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+if &diff
+    let g:solarized_diffmode="high"
+    map ] ]c
+    map [ [c
+    map <leader>1 :diffget LOCAL<CR>
+    map <leader>2 :diffget BASE<CR>
+    map <leader>3 :diffget REMOTE<CR>
+    hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
+    hi DiffChange ctermbg=white  guibg=#ececec gui=none   cterm=none
+    hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
+endif
