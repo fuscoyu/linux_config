@@ -12,7 +12,7 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/.local/bin:/usr/local/bin:$PATH:/$HOME/.cargo/bin
+export PATH=$HOME/.local/bin:/usr/local/bin:$PATH:/$HOME/.cargo/bin:$HOME/go/bin
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/fuscoyu/.oh-my-zsh"
@@ -85,5 +85,4 @@ alias run-go="when-changed -r -v -1 . go run "
 export http_proxy=http://192.168.1.197:10809
 export https_proxy=http://192.168.1.197:10809
 
-export PATH=$PATH:/usr/local/bin:/usr/go/bin
 export GOPATH=/home/fuscoyu/go
